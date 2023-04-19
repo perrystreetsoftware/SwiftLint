@@ -126,7 +126,7 @@ public struct Configuration {
     /// - parameter strict:                 Treat warnings as errors
     @_spi(TestHelper)
     public init(
-        rulesMode: RulesMode = .default(disabled: [], optIn: []),
+        rulesMode: RulesMode = .default(disabled: [], optIn: [], disabledRulesForFiles: [:]),
         allRulesWrapped: [ConfigurationRuleWrapper]? = nil,
         ruleList: RuleList = RuleRegistry.shared.list,
         fileGraph: FileGraph? = nil,
@@ -202,7 +202,11 @@ public struct Configuration {
         defer { basedOnCustomConfigurationFiles = hasCustomConfigurationFiles }
 
         let currentWorkingDirectory = FileManager.default.currentDirectoryPath.bridge().absolutePathStandardized()
-        let rulesMode: RulesMode = enableAllRules ? .allEnabled : .default(disabled: [], optIn: [])
+        let rulesMode: RulesMode = enableAllRules ? .allEnabled : .default(
+            disabled: [],
+            optIn: [],
+            disabledRulesForFiles: [:]
+        )
 
         // Try obtaining cached config
         let cacheIdentifier = "\(currentWorkingDirectory) - \(configurationFiles)"

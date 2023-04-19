@@ -54,7 +54,8 @@ extension ConfigurationTests {
     func testOnlyRulesMerging() {
         let baseConfiguration = Configuration(rulesMode: .default(disabled: [],
                                                                   optIn: [ForceTryRule.description.identifier,
-                                                                          ForceCastRule.description.identifier]))
+                                                                          ForceCastRule.description.identifier],
+                                                                  disabledRulesForFiles: [:]))
         let onlyConfiguration = Configuration(rulesMode: .only([TodoRule.description.identifier]))
         XCTAssertTrue(baseConfiguration.contains(rule: TodoRule.self))
         XCTAssertEqual(onlyConfiguration.rules.count, 1)
@@ -342,11 +343,13 @@ extension ConfigurationTests {
         for testCase in testCases {
             let parentConfiguration = Configuration(rulesMode: .default(
                 disabled: testCase.disabledInParent ? [ruleIdentifier] : [],
-                optIn: testCase.optedInInParent ? [ruleIdentifier] : []
+                optIn: testCase.optedInInParent ? [ruleIdentifier] : [], 
+                disabledRulesForFiles: [:]
             ))
             let childConfiguration = Configuration(rulesMode: .default(
                 disabled: testCase.disabledInChild ? [ruleIdentifier] : [],
-                optIn: testCase.optedInInChild ? [ruleIdentifier] : []
+                optIn: testCase.optedInInChild ? [ruleIdentifier] : [],
+                disabledRulesForFiles: [:]
             ))
             let mergedConfiguration = parentConfiguration.merged(withChild: childConfiguration, rootDirectory: "")
             let isEnabled = mergedConfiguration.contains(rule: ruleType)
@@ -375,10 +378,10 @@ extension ConfigurationTests {
         let ruleIdentifier = ruleType.description.identifier
         for testCase in testCases {
             let parentConfiguration = Configuration(
-                rulesMode: .default(disabled: testCase.disabledInParent ? [ruleIdentifier] : [], optIn: [])
+                rulesMode: .default(disabled: testCase.disabledInParent ? [ruleIdentifier] : [], optIn: [], disabledRulesForFiles: [:])
             )
             let childConfiguration = Configuration(
-                rulesMode: .default(disabled: testCase.disabledInChild ? [ruleIdentifier] : [], optIn: [])
+                rulesMode: .default(disabled: testCase.disabledInChild ? [ruleIdentifier] : [], optIn: [], disabledRulesForFiles: [:])
             )
             let mergedConfiguration = parentConfiguration.merged(withChild: childConfiguration, rootDirectory: "")
             let isEnabled = mergedConfiguration.contains(rule: ruleType)
@@ -409,7 +412,8 @@ extension ConfigurationTests {
         for testCase in testCases {
             let childConfiguration = Configuration(rulesMode: .default(
                 disabled: testCase.disabledInChild ? [ruleIdentifier] : [],
-                optIn: testCase.optedInInChild ? [ruleIdentifier] : []
+                optIn: testCase.optedInInChild ? [ruleIdentifier] : [],
+                disabledRulesForFiles: [:]
             ))
             let mergedConfiguration = parentConfiguration.merged(withChild: childConfiguration, rootDirectory: "")
             let isEnabled = mergedConfiguration.contains(rule: ruleType)
