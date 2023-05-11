@@ -1393,3 +1393,9 @@ class YodaConditionRuleGeneratedTests: SwiftLintTestCase {
         verifyRule(YodaConditionRule.description)
     }
 }
+
+class RefsNotClosuresRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(RefsNotClosuresRule.description)
+    }
+}

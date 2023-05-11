@@ -235,5 +235,6 @@ public let builtInRules: [any Rule.Type] = [
     XCTSpecificMatcherRule.self,
     YodaConditionRule.self,
     UseCaseExposedFunctionsRule.self,
-    UseCaseExposedFunctionNameRule.self
+    UseCaseExposedFunctionNameRule.self,
+    RefsNotClosuresRule.self
 ]
