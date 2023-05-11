@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
       "state" : {
-        "revision" : "db51c407d3be4a051484a141bf0bff36c43d3b1e",
-        "version" : "1.8.0"
+        "revision" : "32f641cf24fc7abc1c591a2025e9f2f572648b0f",
+        "version" : "1.7.2"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-syntax.git",
       "state" : {
-        "revision" : "6ad4ea24b01559dde0773e3d091f1b9e36175036",
-        "version" : "509.0.2"
+        "revision" : "27cd6190ce0628847a3f8050794d6e627ad79c08",
+        "version" : "509.0.0-swift-DEVELOPMENT-SNAPSHOT-2023-05-02-a"
       }
     },
     {

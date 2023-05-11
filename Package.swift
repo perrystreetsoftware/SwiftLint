@@ -1,10 +1,5 @@
-// swift-tools-version:5.9
-import CompilerPluginSupport
+// swift-tools-version:5.7
 import PackageDescription
-
-let swiftFeatures: [SwiftSetting] = [
-    .enableUpcomingFeature("ExistentialAny")
-]
 
 let package = Package(
     name: "SwiftLint",
@@ -16,12 +11,12 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", .upToNextMinor(from: "1.2.1")),
-        .package(url: "https://github.com/apple/swift-syntax.git", exact: "509.0.2"),
+        .package(url: "https://github.com/apple/swift-syntax.git", exact: "509.0.0-swift-DEVELOPMENT-SNAPSHOT-2023-05-02-a"),
         .package(url: "https://github.com/jpsim/SourceKitten.git", .upToNextMinor(from: "0.34.1")),
-        .package(url: "https://github.com/jpsim/Yams.git", from: "5.0.6"),
+        .package(url: "https://github.com/jpsim/Yams.git", from: "5.0.5"),
         .package(url: "https://github.com/scottrhoyt/SwiftyTextTable.git", from: "0.9.0"),
         .package(url: "https://github.com/JohnSundell/CollectionConcurrencyKit.git", from: "0.2.0"),
-        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMinor(from: "1.8.0"))
+        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", .upToNextMinor(from: "1.7.1"))
     ],
     targets: [
         .plugin(
@@ -39,15 +34,13 @@ let package = Package(
                 "CollectionConcurrencyKit",
                 "SwiftLintFramework",
                 "SwiftyTextTable",
-            ],
-            swiftSettings: swiftFeatures
+            ]
         ),
         .testTarget(
             name: "CLITests",
             dependencies: [
                 "swiftlint"
-            ],
-            swiftSettings: swiftFeatures
+            ]
         ),
         .target(
             name: "SwiftLintCore",
@@ -62,14 +55,11 @@ let package = Package(
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
                 .product(name: "SwiftyTextTable", package: "SwiftyTextTable"),
                 .product(name: "Yams", package: "Yams"),
-                "SwiftLintCoreMacros"
-            ],
-            swiftSettings: swiftFeatures
+            ]
         ),
         .target(
             name: "SwiftLintBuiltInRules",
-            dependencies: ["SwiftLintCore"],
-            swiftSettings: swiftFeatures
+            dependencies: ["SwiftLintCore"]
         ),
         .target(
             name: "SwiftLintExtraRules",
@@ -80,12 +70,8 @@ let package = Package(
             dependencies: [
                 "SwiftLintBuiltInRules",
                 "SwiftLintCore",
-                "SwiftLintExtraRules",
-                // Workaround for https://github.com/apple/swift-package-manager/issues/6940:
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                "CollectionConcurrencyKit"
-            ],
-            swiftSettings: swiftFeatures
+                "SwiftLintExtraRules"
+            ]
         ),
         .target(name: "DyldWarningWorkaround"),
         .target(
@@ -99,29 +85,25 @@ let package = Package(
             name: "SwiftLintFrameworkTests",
             dependencies: [
                 "SwiftLintFramework",
-                "SwiftLintTestHelpers",
-                "SwiftLintCoreMacros"
+                "SwiftLintTestHelpers"
             ],
             exclude: [
                 "Resources",
-            ],
-            swiftSettings: swiftFeatures
+            ]
         ),
         .testTarget(
             name: "GeneratedTests",
             dependencies: [
                 "SwiftLintFramework",
                 "SwiftLintTestHelpers"
-            ],
-            swiftSettings: swiftFeatures
+            ]
         ),
         .testTarget(
             name: "IntegrationTests",
             dependencies: [
                 "SwiftLintFramework",
                 "SwiftLintTestHelpers"
-            ],
-            swiftSettings: swiftFeatures
+            ]
         ),
         .testTarget(
             name: "ExtraRulesTests",
@@ -132,25 +114,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "SwiftLintBinary",
-            url: "https://github.com/realm/SwiftLint/releases/download/0.54.0/SwiftLintBinary-macos.artifactbundle.zip",
-            checksum: "963121d6babf2bf5fd66a21ac9297e86d855cbc9d28322790646b88dceca00f1"
-        ),
-        .macro(
-            name: "SwiftLintCoreMacros",
-            dependencies: [
-                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
-            ],
-            path: "Source/SwiftLintCoreMacros",
-            swiftSettings: swiftFeatures
-        ),
-        .testTarget(
-            name: "MacroTests",
-            dependencies: [
-                "SwiftLintCoreMacros",
-                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
-            ],
-            swiftSettings: swiftFeatures
-        ),
+            url: "https://github.com/realm/SwiftLint/releases/download/0.0.3/SwiftLintBinary-macos.artifactbundle.zip",
+            checksum: "1f62b08dc8ee3263bf210a86b58f1878d04b462eb60128247329fc4f501f04f0"
+        )
     ]
 )
