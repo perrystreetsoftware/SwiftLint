@@ -29,8 +29,7 @@ class DisabledRulesForFileTest: XCTestCase {
 
         let storage = RuleStorage()
         let violations = Linter(
-            file: logicFile,
-            configuration: .init()
+            file: logicFile
         ).collect(into: storage).styleViolations(using: storage)
         XCTAssertEqual(violations.count, 1)
     }
