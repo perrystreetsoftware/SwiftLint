@@ -236,5 +236,6 @@ public let builtInRules: [any Rule.Type] = [
     YodaConditionRule.self,
     UseCaseExposedFunctionsRule.self,
     UseCaseExposedFunctionNameRule.self,
-    RefsNotClosuresRule.self
+    AdaptersReceiveRefsNotClosuresRule.self,
+    AdaptersUseRefsNotClosuresRule.self
 ]
