@@ -1,41 +1,42 @@
 import SwiftSyntax
 
-struct RefsNotClosuresRule: SwiftSyntaxRule, ConfigurationProviderRule {
-    var configuration = SeverityConfiguration(.warning)
+struct AdaptersUseRefsNotClosuresRule: SwiftSyntaxRule, ConfigurationProviderRule {
+    var configuration = SeverityConfiguration(.error)
 
     static let description = RuleDescription(
-        identifier: "refs_not_closures",
-        name: "Refs not closures",
+        identifier: "adapters_use_refs_not_closures",
+        name: "Adapters use refs not closures",
         description: "Prefer using function references so that SwiftUI can reduce update passes",
         kind: .performance,
         nonTriggeringExamples: [
             Example("""
-            let viewModel = ViewModel()
-            lazy var view = Adapter(callback: viewModel.callback)
+            struct SomeAdapter {
+              let viewModel: AViewModel
+
+              var body: some View {
+                InnerThing(onEvent: { viewModel.onEvent() })
+              }
+            }
             """),
             Example("""
-            let viewModel = ViewModel(callback: { viewModel.callback })
-            """),
-            Example("""
-            AccountScreen(onButtonTapped: viewModel.onButtonTapped)
+            struct SomeView {
+              let viewModel: AViewModel
+
+              var body: some View {
+                InnerView(onEvent: { viewModel.onEvent() })
+              }
+            }
             """)
         ],
         triggeringExamples: [
             Example("""
-            let viewModel = ViewModel()
-            lazy var view = Adapter(callback: { viewModel.callback })
-            """),
-            Example("""
-            let view = Adapter(state: true, callback: { viewModel.callback })
-            """),
-            Example("""
-            let view = Adapter(state: true,
-                               onButtonTapped: { viewModel.callback })
-            """),
-            Example("""
-            Adapter(state: .initial,
-                    isEnabled: false,
-                    onButtonTapped: { viewModel.callback })
+            struct SomeAdapter {
+              let viewModel: AViewModel
+
+              var body: some View {
+                InnerView(onEvent: { viewModel.onEvent() })
+              }
+            }
             """)
         ]
     )
@@ -47,12 +48,20 @@ struct RefsNotClosuresRule: SwiftSyntaxRule, ConfigurationProviderRule {
 
 private extension String {
     var isSwiftUIView: Bool {
-        self.hasSuffix("Adapter")
+        self.hasSuffix("View") || self.hasSuffix("Screen") || self.hasSuffix("Page")
     }
 }
 
-private extension RefsNotClosuresRule {
+private extension AdaptersUseRefsNotClosuresRule {
     final class Visitor: ViolationsSyntaxVisitor {
+        override func visit(_ node: StructDeclSyntax) -> SyntaxVisitorContinueKind {
+            if node.identifier.text.hasSuffix("Adapter") {
+                return .visitChildren
+            } else {
+                return .skipChildren
+            }
+        }
+
         override func visitPost(_ node: FunctionCallExprSyntax) {
             if node.calledExpression.as(IdentifierExprSyntax.self)?.identifier.text.isSwiftUIView ?? false {
                 var closureCount = 0
