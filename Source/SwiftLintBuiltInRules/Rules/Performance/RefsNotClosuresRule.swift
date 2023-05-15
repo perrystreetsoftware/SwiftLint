@@ -11,7 +11,7 @@ struct RefsNotClosuresRule: SwiftSyntaxRule, ConfigurationProviderRule {
         nonTriggeringExamples: [
             Example("""
             let viewModel = ViewModel()
-            lazy var view = View(callback: viewModel.callback)
+            lazy var view = Adapter(callback: viewModel.callback)
             """),
             Example("""
             let viewModel = ViewModel(callback: { viewModel.callback })
@@ -23,19 +23,19 @@ struct RefsNotClosuresRule: SwiftSyntaxRule, ConfigurationProviderRule {
         triggeringExamples: [
             Example("""
             let viewModel = ViewModel()
-            lazy var view = View(callback: { viewModel.callback })
+            lazy var view = Adapter(callback: { viewModel.callback })
             """),
             Example("""
-            let view = View(state: true, callback: { viewModel.callback })
+            let view = Adapter(state: true, callback: { viewModel.callback })
             """),
             Example("""
-            let view = MyScreen(state: true,
-                                onButtonTapped: { viewModel.callback })
+            let view = Adapter(state: true,
+                               onButtonTapped: { viewModel.callback })
             """),
             Example("""
-            AccountPage(state: .initial,
-                        isEnabled: false,
-                        onButtonTapped: { viewModel.callback })
+            Adapter(state: .initial,
+                    isEnabled: false,
+                    onButtonTapped: { viewModel.callback })
             """)
         ]
     )
@@ -47,7 +47,7 @@ struct RefsNotClosuresRule: SwiftSyntaxRule, ConfigurationProviderRule {
 
 private extension String {
     var isSwiftUIView: Bool {
-        self.hasSuffix("View") || self.hasSuffix("Page") || self.hasSuffix("Screen")
+        self.hasSuffix("Adapter")
     }
 }
 
