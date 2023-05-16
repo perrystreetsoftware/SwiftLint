@@ -5,6 +5,8 @@
 public let builtInRules: [any Rule.Type] = [
     AccessibilityLabelForImageRule.self,
     AccessibilityTraitForButtonRule.self,
+    AdaptersReceiveRefsNotClosuresRule.self,
+    AdaptersUseRefsNotClosuresRule.self,
     AnonymousArgumentInMultilineClosureRule.self,
     AnyObjectProtocolRule.self,
     ArrayInitRule.self,
@@ -221,6 +223,8 @@ public let builtInRules: [any Rule.Type] = [
     UnusedImportRule.self,
     UnusedOptionalBindingRule.self,
     UnusedSetterValueRule.self,
+    UseCaseExposedFunctionNameRule.self,
+    UseCaseExposedFunctionsRule.self,
     ValidIBInspectableRule.self,
     VerticalParameterAlignmentOnCallRule.self,
     VerticalParameterAlignmentRule.self,
@@ -233,9 +237,5 @@ public let builtInRules: [any Rule.Type] = [
     WeakDelegateRule.self,
     XCTFailMessageRule.self,
     XCTSpecificMatcherRule.self,
-    YodaConditionRule.self,
-    UseCaseExposedFunctionsRule.self,
-    UseCaseExposedFunctionNameRule.self,
-    AdaptersReceiveRefsNotClosuresRule.self,
-    AdaptersUseRefsNotClosuresRule.self
+    YodaConditionRule.self
 ]
