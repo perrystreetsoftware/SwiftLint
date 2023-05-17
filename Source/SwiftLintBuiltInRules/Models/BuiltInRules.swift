@@ -5,7 +5,6 @@
 public let builtInRules: [any Rule.Type] = [
     AccessibilityLabelForImageRule.self,
     AccessibilityTraitForButtonRule.self,
-    AdaptersReceiveRefsNotClosuresRule.self,
     AdaptersUseRefsNotClosuresRule.self,
     AnonymousArgumentInMultilineClosureRule.self,
     AnyObjectProtocolRule.self,
