@@ -32,11 +32,7 @@ class RulesTests: SwiftLintTestCase {
         verifyRule(UseCaseExposedFunctionNameRule.description)
     }
 
-    func testAdaptersReceiveRefsNotClosuresRule() {
-        verifyRule(AdaptersReceiveRefsNotClosuresRule.description)
-    }
-
-    func testAdaptersUseRefsNotClosuresRule() {
+    func testAdaptersUseRefsNotClosures() {
         verifyRule(AdaptersUseRefsNotClosuresRule.description)
     }
 }
