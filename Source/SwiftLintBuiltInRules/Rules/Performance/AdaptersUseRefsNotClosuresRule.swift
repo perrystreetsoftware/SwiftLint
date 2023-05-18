@@ -26,6 +26,9 @@ struct AdaptersUseRefsNotClosuresRule: SwiftSyntaxRule, ConfigurationProviderRul
                 InnerView(onEvent: { viewModel.onEvent() })
               }
             }
+            """),
+            Example("""
+            InboxTabsHostingView(showPaywall: { showPaywall?() })
             """)
         ],
         triggeringExamples: [
@@ -54,17 +57,46 @@ private extension String {
 
 private extension AdaptersUseRefsNotClosuresRule {
     final class Visitor: ViolationsSyntaxVisitor {
-        override func visit(_ node: StructDeclSyntax) -> SyntaxVisitorContinueKind {
-            if node.identifier.text.hasSuffix("Adapter") {
-                return .visitChildren
-            } else {
-                return .skipChildren
+        // reverse walk up the tree
+        func isDeclaredInSwiftUiBody(_ node: Syntax?) -> Bool {
+            guard let node else { return false }
+            guard let patternListBinding = node.as(PatternBindingListSyntax.self) else {
+                return isDeclaredInSwiftUiBody(node.parent)
             }
+
+            let isBody = patternListBinding.first?.pattern.as(IdentifierPatternSyntax.self)?.identifier.text == "body"
+            let isReturningView = patternListBinding.first?.typeAnnotation?.as(TypeAnnotationSyntax.self)?.type.as(ConstrainedSugarTypeSyntax.self)?.baseType.as(SimpleTypeIdentifierSyntax.self)?.name.text == "View"
+
+            if isBody && isReturningView {
+                return isDeclaredInAdapterStruct(node.parent)
+            }
+
+            return isDeclaredInSwiftUiBody(node.parent)
+        }
+
+        // reverse walk up the tree
+        func isDeclaredInAdapterStruct(_ node: Syntax?) -> Bool {
+            guard let node else { return false }
+            guard let structDecl = node.as(StructDeclSyntax.self) else {
+                return isDeclaredInAdapterStruct(node.parent)
+            }
+
+            if structDecl.identifier.text.hasSuffix("Adapter") {
+                return true
+            }
+
+            return isDeclaredInAdapterStruct(node.parent)
+        }
+
+        func isCallingSwiftUiView(_ node: FunctionCallExprSyntax) -> Bool {
+            node.calledExpression.as(IdentifierExprSyntax.self)?.identifier.text.isSwiftUIView ?? false
         }
 
         override func visitPost(_ node: FunctionCallExprSyntax) {
-            if node.calledExpression.as(IdentifierExprSyntax.self)?.identifier.text.isSwiftUIView ?? false {
+            if isCallingSwiftUiView(node) {
                 var closureCount = 0
+
+                guard isDeclaredInSwiftUiBody(node._syntaxNode) else { return }
 
                 node.argumentList.forEach { argument in
                     if argument.expression.as(ClosureExprSyntax.self) != nil {
