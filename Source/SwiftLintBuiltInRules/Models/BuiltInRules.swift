@@ -13,6 +13,7 @@ public let builtInRules: [Rule.Type] = [
     BalancedXCTestLifecycleRule.self,
     BlanketDisableCommandRule.self,
     BlockBasedKVORule.self,
+    CatchInsideFlatmapRule.self,
     CaptureVariableRule.self,
     ClassDelegateProtocolRule.self,
     ClosingBraceRule.self,
