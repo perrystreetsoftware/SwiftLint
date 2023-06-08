@@ -68,7 +68,7 @@ internal struct CatchInsideFlatmapRuleExamples {
                         .eraseToAnyPublisher()
                 }
                 .eraseToAnyPublisher()
-        """),
+        """)
     ]
 
     static var triggeringExamples: [Example] {

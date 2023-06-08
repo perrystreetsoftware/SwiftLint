@@ -39,4 +39,8 @@ class RulesTests: SwiftLintTestCase {
     func testCatchInsideFlatmap() {
         verifyRule(CatchInsideFlatmapRule.description)
     }
+
+    func testFlatmapOnPublished() {
+        verifyRule(FlatmapOnPublishedRule.description)
+    }
 }

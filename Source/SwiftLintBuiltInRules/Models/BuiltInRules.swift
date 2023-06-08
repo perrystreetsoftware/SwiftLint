@@ -75,6 +75,7 @@ public let builtInRules: [Rule.Type] = [
     FileTypesOrderRule.self,
     FirstWhereRule.self,
     FlatMapOverMapReduceRule.self,
+    FlatmapOnPublishedRule.self,
     ForWhereRule.self,
     ForceCastRule.self,
     ForceTryRule.self,
