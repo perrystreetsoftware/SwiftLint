@@ -35,4 +35,8 @@ class RulesTests: SwiftLintTestCase {
     func testAdaptersUseRefsNotClosures() {
         verifyRule(AdaptersUseRefsNotClosuresRule.description)
     }
+
+    func testFlatmapOnPublished() {
+        verifyRule(FlatmapOnPublishedRule.description)
+    }
 }
