@@ -114,8 +114,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "SwiftLintBinary",
-            url: "https://github.com/perrystreetsoftware/SwiftLint/releases/download/0.0.10/SwiftLintBinary-macos.artifactbundle.zip",
-            checksum: "536af66d2574b9f65b7ee0261da4f8b77699017fc2d6398ab7642010eaf819a6"
+            url: "https://github.com/perrystreetsoftware/SwiftLint/releases/download/0.0.14/SwiftLintBinary-macos.artifactbundle.zip",
+            checksum: "6fe664938fd698d6ed191c2910cab664f2fb977a870206f449ecf380fc7a3e93"
         )
     ]
 )
