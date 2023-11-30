@@ -82,7 +82,8 @@ private extension MemberBlockSyntax {
         members.filter { member in
             guard let function: FunctionDeclSyntax = member.decl.as(FunctionDeclSyntax.self) else { return false }
 
-            return function.modifiers.contains(where: { $0.name.tokenKind != .keyword(.private) })
+            return function.modifiers.isEmpty ||
+                function.modifiers.first?.as(DeclModifierSyntax.self)?.name.as(TokenSyntax.self)?.text == "public"
         }
     }
 }

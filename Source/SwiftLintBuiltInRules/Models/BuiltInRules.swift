@@ -5,6 +5,7 @@
 public let builtInRules: [any Rule.Type] = [
     AccessibilityLabelForImageRule.self,
     AccessibilityTraitForButtonRule.self,
+    AdaptersUseRefsNotClosuresRule.self,
     AnonymousArgumentInMultilineClosureRule.self,
     AnyObjectProtocolRule.self,
     ArrayInitRule.self,
@@ -73,6 +74,7 @@ public let builtInRules: [any Rule.Type] = [
     FileTypesOrderRule.self,
     FirstWhereRule.self,
     FlatMapOverMapReduceRule.self,
+    FlatmapOnPublishedRule.self,
     ForWhereRule.self,
     ForceCastRule.self,
     ForceTryRule.self,
@@ -134,6 +136,7 @@ public let builtInRules: [any Rule.Type] = [
     NotificationCenterDetachmentRule.self,
     NumberSeparatorRule.self,
     ObjectLiteralRule.self,
+    ObservedViewModelsRule.self,
     OpeningBraceRule.self,
     OperatorFunctionWhitespaceRule.self,
     OperatorUsageWhitespaceRule.self,
@@ -221,6 +224,8 @@ public let builtInRules: [any Rule.Type] = [
     UnusedImportRule.self,
     UnusedOptionalBindingRule.self,
     UnusedSetterValueRule.self,
+    UseCaseExposedFunctionNameRule.self,
+    UseCaseExposedFunctionsRule.self,
     ValidIBInspectableRule.self,
     VerticalParameterAlignmentOnCallRule.self,
     VerticalParameterAlignmentRule.self,
@@ -233,7 +238,5 @@ public let builtInRules: [any Rule.Type] = [
     WeakDelegateRule.self,
     XCTFailMessageRule.self,
     XCTSpecificMatcherRule.self,
-    YodaConditionRule.self,
-    UseCaseExposedFunctionsRule.self,
-    UseCaseExposedFunctionNameRule.self
+    YodaConditionRule.self
 ]
