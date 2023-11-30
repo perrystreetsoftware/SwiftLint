@@ -132,8 +132,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "SwiftLintBinary",
-            url: "https://github.com/realm/SwiftLint/releases/download/0.54.0/SwiftLintBinary-macos.artifactbundle.zip",
-            checksum: "963121d6babf2bf5fd66a21ac9297e86d855cbc9d28322790646b88dceca00f1"
+            url: "https://github.com/perrystreetsoftware/SwiftLint/releases/download/0.0.16/SwiftLintBinary-macos.artifactbundle.zip",
+            checksum: "afdb85f2d34c8547dd89c26f50b53afb584cb37124ad0a85fae6d1606c4fb5b5"
         ),
         .macro(
             name: "SwiftLintCoreMacros",
