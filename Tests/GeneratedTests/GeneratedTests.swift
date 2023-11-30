@@ -20,6 +20,12 @@ class AccessibilityTraitForButtonRuleGeneratedTests: SwiftLintTestCase {
     }
 }
 
+class AdaptersUseRefsNotClosuresRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(AdaptersUseRefsNotClosuresRule.description)
+    }
+}
+
 class AnonymousArgumentInMultilineClosureRuleGeneratedTests: SwiftLintTestCase {
     func testWithDefaultConfiguration() {
         verifyRule(AnonymousArgumentInMultilineClosureRule.description)
@@ -428,6 +434,12 @@ class FlatMapOverMapReduceRuleGeneratedTests: SwiftLintTestCase {
     }
 }
 
+class FlatmapOnPublishedRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(FlatmapOnPublishedRule.description)
+    }
+}
+
 class ForWhereRuleGeneratedTests: SwiftLintTestCase {
     func testWithDefaultConfiguration() {
         verifyRule(ForWhereRule.description)
@@ -791,6 +803,12 @@ class NumberSeparatorRuleGeneratedTests: SwiftLintTestCase {
 class ObjectLiteralRuleGeneratedTests: SwiftLintTestCase {
     func testWithDefaultConfiguration() {
         verifyRule(ObjectLiteralRule.description)
+    }
+}
+
+class ObservedViewModelsRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(ObservedViewModelsRule.description)
     }
 }
 
@@ -1313,6 +1331,18 @@ class UnusedOptionalBindingRuleGeneratedTests: SwiftLintTestCase {
 class UnusedSetterValueRuleGeneratedTests: SwiftLintTestCase {
     func testWithDefaultConfiguration() {
         verifyRule(UnusedSetterValueRule.description)
+    }
+}
+
+class UseCaseExposedFunctionNameRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(UseCaseExposedFunctionNameRule.description)
+    }
+}
+
+class UseCaseExposedFunctionsRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(UseCaseExposedFunctionsRule.description)
     }
 }
 
