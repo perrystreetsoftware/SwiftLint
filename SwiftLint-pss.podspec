@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                      = 'SwiftLint-pss'
-  s.version                   = '0.0.14'
+  s.version                   = '0.0.15'
   s.summary                   = 'A tool to enforce Swift style and conventions.'
   s.homepage                  = 'https://github.com/perrystreetsoftware/SwiftLint'
   s.license                   = { type: 'MIT', file: 'LICENSE' }
