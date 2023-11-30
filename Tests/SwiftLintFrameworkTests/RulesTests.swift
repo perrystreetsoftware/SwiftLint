@@ -39,4 +39,8 @@ class RulesTests: SwiftLintTestCase {
     func testFlatmapOnPublished() {
         verifyRule(FlatmapOnPublishedRule.description)
     }
+
+    func testObservedViewModels() {
+        verifyRule(ObservedViewModelsRule.description)
+    }
 }
