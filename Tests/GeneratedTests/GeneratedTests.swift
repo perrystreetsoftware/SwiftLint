@@ -19,6 +19,12 @@ final class AccessibilityTraitForButtonRuleGeneratedTests: SwiftLintTestCase {
     }
 }
 
+final class AdaptersUseRefsNotClosuresRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(AdaptersUseRefsNotClosuresRule.description)
+    }
+}
+
 final class AnonymousArgumentInMultilineClosureRuleGeneratedTests: SwiftLintTestCase {
     func testWithDefaultConfiguration() {
         verifyRule(AnonymousArgumentInMultilineClosureRule.description)
@@ -439,6 +445,12 @@ final class FlatMapOverMapReduceRuleGeneratedTests: SwiftLintTestCase {
     }
 }
 
+final class FlatmapOnPublishedRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(FlatmapOnPublishedRule.description)
+    }
+}
+
 final class ForWhereRuleGeneratedTests: SwiftLintTestCase {
     func testWithDefaultConfiguration() {
         verifyRule(ForWhereRule.description)
@@ -814,6 +826,12 @@ final class NumberSeparatorRuleGeneratedTests: SwiftLintTestCase {
 final class ObjectLiteralRuleGeneratedTests: SwiftLintTestCase {
     func testWithDefaultConfiguration() {
         verifyRule(ObjectLiteralRule.description)
+    }
+}
+
+final class ObservedViewModelsRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(ObservedViewModelsRule.description)
     }
 }
 
@@ -1378,6 +1396,18 @@ final class UnusedParameterRuleGeneratedTests: SwiftLintTestCase {
 final class UnusedSetterValueRuleGeneratedTests: SwiftLintTestCase {
     func testWithDefaultConfiguration() {
         verifyRule(UnusedSetterValueRule.description)
+    }
+}
+
+final class UseCaseExposedFunctionNameRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(UseCaseExposedFunctionNameRule.description)
+    }
+}
+
+final class UseCaseExposedFunctionsRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(UseCaseExposedFunctionsRule.description)
     }
 }
 

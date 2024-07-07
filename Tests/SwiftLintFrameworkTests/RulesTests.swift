@@ -23,4 +23,24 @@ final class RulesTests: SwiftLintTestCase {
     func testOrphanedDocComment() {
         verifyRule(OrphanedDocCommentRule.description, commentDoesntViolate: false, skipCommentTests: true)
     }
+
+    func testUseCaseExposedFunctions() {
+        verifyRule(UseCaseExposedFunctionsRule.description)
+    }
+
+     func testUseCaseExposedFunctionName() {
+        verifyRule(UseCaseExposedFunctionNameRule.description)
+    }
+
+    func testAdaptersUseRefsNotClosures() {
+        verifyRule(AdaptersUseRefsNotClosuresRule.description)
+    }
+
+    func testFlatmapOnPublished() {
+        verifyRule(FlatmapOnPublishedRule.description)
+    }
+
+    func testObservedViewModels() {
+        verifyRule(ObservedViewModelsRule.description)
+    }
 }
