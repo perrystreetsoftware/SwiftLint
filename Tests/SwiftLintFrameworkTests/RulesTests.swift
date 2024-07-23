@@ -43,4 +43,8 @@ class RulesTests: SwiftLintTestCase {
     func testObservedViewModels() {
         verifyRule(ObservedViewModelsRule.description)
     }
+    
+    func testDoNotOverrideUserOrSuperPropertiesRule() {
+        verifyRule(DoNotOverrideUserOrSuperPropertiesRule.description)
+    }
 }
