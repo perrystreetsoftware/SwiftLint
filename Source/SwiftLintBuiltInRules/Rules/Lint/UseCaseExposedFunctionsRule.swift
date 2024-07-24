@@ -6,7 +6,7 @@ struct UseCaseExposedFunctionsRule: Rule {
 
     init() {}
 
-    let message: String = "A UseCase should only expose one public function"
+    let message = "A UseCase should only expose one public function"
 
     static let description = RuleDescription(
         identifier: "usecase_exposed_functions",
@@ -134,7 +134,7 @@ internal struct UseCaseExposedFunctionsRuleExamples {
                 return 35
             }
         }
-        """)
+        """),
     ]
 
     static let triggeringExamples: [Example] = [
@@ -191,6 +191,6 @@ internal struct UseCaseExposedFunctionsRuleExamples {
                 return "call"
             }
         }
-        """)
+        """),
     ]
 }

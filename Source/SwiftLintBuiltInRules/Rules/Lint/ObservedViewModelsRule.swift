@@ -6,7 +6,7 @@ struct ObservedViewModelsRule: Rule {
 
     init() {}
 
-    let message: String = "You must use properties of an @Observed viewModel"
+    let message = "You must use properties of an @Observed viewModel"
 
     static let description = RuleDescription(
         identifier: "observed_view_models",
@@ -48,9 +48,8 @@ private extension ObservedViewModelsRule {
 
             if isMatching {
                 return .visitChildren
-            } else {
-                return .skipChildren
             }
+            return .skipChildren
         }
 
         private var isMatching: Bool {
@@ -64,7 +63,7 @@ private extension ObservedViewModelsRule {
                 }
             }
         }
-        
+
         override func visitPost(_ node: MemberAccessExprSyntax) {
             if let identifierText = node.base?.as(DeclReferenceExprSyntax.self)?.baseName.text {
                 if observedViewModels.map({ $0.0 }).contains(
@@ -127,7 +126,7 @@ internal struct ObservedViewModelsRuleExamples {
                     Toggle("Is online", isOn: $viewModel.isOnline)
                 }
             }
-        """)
+        """),
     ]
 
     static var triggeringExamples: [Example] {
@@ -159,7 +158,7 @@ internal struct ObservedViewModelsRuleExamples {
                         EmptyView()
                     }
                 }
-            """)
+            """),
         ]
     }
 }
