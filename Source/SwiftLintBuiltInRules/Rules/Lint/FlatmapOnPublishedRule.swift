@@ -6,7 +6,7 @@ struct FlatmapOnPublishedRule: Rule {
 
     init() {}
 
-    let message: String = "Do not apply a `.flatMap` on a `$published` value"
+    let message = "Do not apply a `.flatMap` on a `$published` value"
 
     static let description = RuleDescription(
         identifier: "flatmap_on_published",
@@ -58,7 +58,7 @@ internal struct FlatmapOnPublishedRuleExamples {
                         }
                         .switchToLatest()
                         .eraseToAnyPublisher()
-        """)
+        """),
     ]
 
     static var triggeringExamples: [Example] {
@@ -70,7 +70,7 @@ internal struct FlatmapOnPublishedRuleExamples {
                             return Just(()).eraseToAnyPublisher()
                         }
                         .eraseToAnyPublisher()
-            """)
+            """),
         ]
     }
 }

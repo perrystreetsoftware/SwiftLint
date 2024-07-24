@@ -6,7 +6,7 @@ struct UseCaseExposedFunctionNameRule: Rule {
 
     init() {}
 
-    let message: String = "A UseCase's exposed function should be a callAsFunction"
+    let message = "A UseCase's exposed function should be a callAsFunction"
 
     static let description = RuleDescription(
         identifier: "usecase_exposed_function_name",
@@ -128,7 +128,7 @@ internal struct UseCaseExposedFunctionNameRuleExamples {
                 return "call"
             }
         }
-        """)
+        """),
     ]
 
     static let triggeringExamples: [Example] = [
@@ -162,6 +162,6 @@ internal struct UseCaseExposedFunctionNameRuleExamples {
                 return 35
             }
         }
-        """)
+        """),
     ]
 }
