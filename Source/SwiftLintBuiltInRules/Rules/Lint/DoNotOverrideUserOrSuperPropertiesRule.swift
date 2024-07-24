@@ -14,21 +14,59 @@ struct DoNotOverrideUserOrSuperPropertiesRule: Rule {
         description: "Do not override any of the pre-existing super/user properties or source",
         kind: .lint,
         nonTriggeringExamples: DoNotOverrideUserOrSuperPropertiesRuleExamples.nonTriggeringExamples,
-        triggeringExamples: DoNotOverrideUserOrSuperPropertiesRuleExamples.triggeringExamples
+        triggeringExamples: DoNotOverrideUserOrSuperPropertiesRuleExamples.triggeringExamples()
     )
+    
+    static let userProperties = [
+        "age",
+        "device_locale",
+        "device_model",
+        "email",
+        "flavor",
+        "hardware_id",
+        "ios_app_build_number",
+        "ios_app_version",
+        "ios_app_version_number",
+        "most_recent_app_version_number",
+        "name",
+        "os_version",
+        "profile_age_months",
+        "pro_status",
+        "tags"
+    ]
+
+    static let superProperties = [
+        "admin",
+        "boost_active",
+        "enabled_features",
+        "profile_id",
+        "profile_type",
+        "remote_config_channel",
+        "remote_configs",
+        "session_id",
+        "source"
+    ]
+    
+    static let properties = userProperties + superProperties
 }
 
 private extension DoNotOverrideUserOrSuperPropertiesRule {
+    
     final class Visitor: ViolationsSyntaxVisitor<ConfigurationType> {
+        
+        private func containsProperty(in segments: StringLiteralExprSyntax?) -> Bool {
+            return segments?.segments.contains(where: { segment in
+                DoNotOverrideUserOrSuperPropertiesRule.properties.contains(
+                    segment.as(StringSegmentSyntax.self)?.content.as(TokenSyntax.self)?.text ?? ""
+                )
+            }) ?? false
+        }
         
         override func visitPost(_ node: DictionaryExprSyntax) {
             guard
                 let propertiesContent = node.content.as(DictionaryElementListSyntax.self),
                 propertiesContent.contains(where: {
-                    let keySegments = $0.key.as(StringLiteralExprSyntax.self)?.segments
-                    return keySegments?.contains(where: {
-                        $0.as(StringSegmentSyntax.self)?.content.as(TokenSyntax.self)?.text == "source"
-                    }) ?? false
+                    containsProperty(in: $0.key.as(StringLiteralExprSyntax.self))
                 })
             else {
                 return
@@ -40,10 +78,8 @@ private extension DoNotOverrideUserOrSuperPropertiesRule {
         override func visitPost(_ node: SubscriptCallExprSyntax) {
             guard
                 node.arguments.as(LabeledExprListSyntax.self)?.contains(where: {
-                    let keySegments = $0.as(LabeledExprSyntax.self)?.expression.as(StringLiteralExprSyntax.self)?.segments
-                    return keySegments?.contains(where: {
-                        $0.as(StringSegmentSyntax.self)?.content.as(TokenSyntax.self)?.text == "source"
-                    }) ?? false
+                    containsProperty(in: $0.as(LabeledExprSyntax.self)?.expression.as(StringLiteralExprSyntax.self)
+                    )
                 }) ?? false
             else {
                 return
@@ -54,7 +90,7 @@ private extension DoNotOverrideUserOrSuperPropertiesRule {
     }
 }
 
-internal struct DoNotOverrideUserOrSuperPropertiesRuleExamples {
+private struct DoNotOverrideUserOrSuperPropertiesRuleExamples {
     static let nonTriggeringExamples: [Example] = [
         Example("""
                 public static func callIgnored(targetUserId: Int, source: IgnoreEventSourceType) -> AnalyticsEvent {
@@ -82,16 +118,19 @@ internal struct DoNotOverrideUserOrSuperPropertiesRuleExamples {
                 }
         """)
     ]
-
-    static var triggeringExamples: [Example] {
-        [
-            Example("""
+    
+    static func triggeringExamples() -> [Example] {
+        var examples = [Example]()
+        
+        DoNotOverrideUserOrSuperPropertiesRule.properties.forEach { property in
+            examples.append(
+                Example("""
                     public static func callEnded(targetUserId: Int, callDuration: TimeInterval? = nil) -> AnalyticsEvent {
                         var properties: [String: any AnalyticsProperty] = ["target_id": targetUserId]
                         if let callDuration = callDuration {
                             properties["call_duration"] = callDuration * 1000
                         }
-                        properties["source"] = "some source"
+                        properties["\(property)"] = "some value"
             
                         return AnalyticsEvent(
                             name: "call_ended",
@@ -100,17 +139,22 @@ internal struct DoNotOverrideUserOrSuperPropertiesRuleExamples {
                             logTargets: [.business, .diagnostics]
                         )
                     }
-            """),
-            Example("""
-                    public static func callIgnored(targetUserId: Int, source: IgnoreEventSourceType) -> AnalyticsEvent {
-                        return AnalyticsEvent(
-                            name: "ignored_call_viewed",
-                            category: .videoChat,
-                            properties: ["target_id": targetUserId, "source": source.rawValue],
-                            logTargets: [.diagnostics]
-                        )
-                    }
             """)
-        ]
+            )
+            examples.append(
+                Example("""
+                        public static func callIgnored(targetUserId: Int, source: IgnoreEventSourceType) -> AnalyticsEvent {
+                            return AnalyticsEvent(
+                                name: "ignored_call_viewed",
+                                category: .videoChat,
+                                properties: ["target_id": targetUserId, "\(property)": "some value"],
+                                logTargets: [.diagnostics]
+                            )
+                        }
+                """)
+            )
+        }
+        
+        return examples
     }
 }
