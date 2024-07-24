@@ -45,6 +45,7 @@ public let builtInRules: [any Rule.Type] = [
     DiscouragedObjectLiteralRule.self,
     DiscouragedOptionalBooleanRule.self,
     DiscouragedOptionalCollectionRule.self,
+    DoNotOverrideUserOrSuperPropertiesRule.self,
     DuplicateConditionsRule.self,
     DuplicateEnumCasesRule.self,
     DuplicateImportsRule.self,
