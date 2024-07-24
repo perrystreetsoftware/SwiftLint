@@ -43,20 +43,19 @@ struct DoNotOverrideUserOrSuperPropertiesRule: Rule {
         "profile_type",
         "remote_config_channel",
         "remote_configs",
-        "session_id",
-        "source"
+        "session_id"
     ]
     
-    static let properties = userProperties + superProperties
+    static let restrictedProperties = userProperties + superProperties + ["source"]
 }
 
 private extension DoNotOverrideUserOrSuperPropertiesRule {
     
     final class Visitor: ViolationsSyntaxVisitor<ConfigurationType> {
         
-        private func containsProperty(in segments: StringLiteralExprSyntax?) -> Bool {
+        private func containsRestrictedProperty(in segments: StringLiteralExprSyntax?) -> Bool {
             return segments?.segments.contains(where: { segment in
-                DoNotOverrideUserOrSuperPropertiesRule.properties.contains(
+                DoNotOverrideUserOrSuperPropertiesRule.restrictedProperties.contains(
                     segment.as(StringSegmentSyntax.self)?.content.as(TokenSyntax.self)?.text ?? ""
                 )
             }) ?? false
@@ -66,7 +65,7 @@ private extension DoNotOverrideUserOrSuperPropertiesRule {
             guard
                 let propertiesContent = node.content.as(DictionaryElementListSyntax.self),
                 propertiesContent.contains(where: {
-                    containsProperty(in: $0.key.as(StringLiteralExprSyntax.self))
+                    containsRestrictedProperty(in: $0.key.as(StringLiteralExprSyntax.self))
                 })
             else {
                 return
@@ -78,7 +77,7 @@ private extension DoNotOverrideUserOrSuperPropertiesRule {
         override func visitPost(_ node: SubscriptCallExprSyntax) {
             guard
                 node.arguments.as(LabeledExprListSyntax.self)?.contains(where: {
-                    containsProperty(in: $0.as(LabeledExprSyntax.self)?.expression.as(StringLiteralExprSyntax.self)
+                    containsRestrictedProperty(in: $0.as(LabeledExprSyntax.self)?.expression.as(StringLiteralExprSyntax.self)
                     )
                 }) ?? false
             else {
@@ -122,7 +121,7 @@ private struct DoNotOverrideUserOrSuperPropertiesRuleExamples {
     static func triggeringExamples() -> [Example] {
         var examples = [Example]()
         
-        DoNotOverrideUserOrSuperPropertiesRule.properties.forEach { property in
+        DoNotOverrideUserOrSuperPropertiesRule.restrictedProperties.forEach { property in
             examples.append(
                 Example("""
                     public static func callEnded(targetUserId: Int, callDuration: TimeInterval? = nil) -> AnalyticsEvent {
