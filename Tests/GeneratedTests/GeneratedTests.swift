@@ -253,6 +253,12 @@ final class DiscouragedOptionalCollectionRuleGeneratedTests: SwiftLintTestCase {
     }
 }
 
+final class DoNotOverrideUserOrSuperPropertiesRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(DoNotOverrideUserOrSuperPropertiesRule.description)
+    }
+}
+
 final class DuplicateConditionsRuleGeneratedTests: SwiftLintTestCase {
     func testWithDefaultConfiguration() {
         verifyRule(DuplicateConditionsRule.description)
