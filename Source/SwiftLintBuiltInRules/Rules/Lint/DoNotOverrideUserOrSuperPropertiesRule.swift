@@ -61,7 +61,7 @@ private extension DoNotOverrideUserOrSuperPropertiesRule {
 
         private func isInAnalyticsEvent(_ syntax: Syntax?) -> Bool {
             var parent = syntax
-            let maxIterations = 10
+            let maxIterations = 20
             var currentIteration = 0
             var isInAnalyticsEvent = false
 
@@ -163,6 +163,23 @@ private struct DoNotOverrideUserOrSuperPropertiesRuleExamples {
         var examples = [Example]()
 
         DoNotOverrideUserOrSuperPropertiesRule.restrictedProperties.forEach { property in
+            examples.append(
+                Example("""
+                        public static func callEnded(targetUserId: Int, callDuration: TimeInterval? = nil) -> AnalyticsEvent {
+                            var properties: [String: any AnalyticsProperty] = ["target_id": targetUserId]
+                            if let callDuration = callDuration {
+                                properties["\(property)"] = callDuration * 1000
+                            }
+                
+                            return AnalyticsEvent(
+                                name: "call_ended",
+                                category: .videoChat,
+                                properties: properties,
+                                logTargets: [.business, .diagnostics]
+                            )
+                        }
+                """)
+            )
             examples.append(
                 Example("""
                     public static var viewed: AnalyticsEvent {
