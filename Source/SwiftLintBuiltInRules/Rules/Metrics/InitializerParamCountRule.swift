@@ -5,8 +5,8 @@ struct InitializerParamCountRule: Rule {
     var configuration = InitializerParamCountRuleConfiguration()
 
     static let description = RuleDescription(
-        identifier: "parameter_count",
-        name: "Parameter Count",
+        identifier: "initializer_parameter_count",
+        name: "Initializer Parameter Count",
         description: "Initializers should not have more than 8 parameters.",
         kind: .metrics,
         nonTriggeringExamples: [
