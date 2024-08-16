@@ -94,6 +94,7 @@ public let builtInRules: [any Rule.Type] = [
     InclusiveLanguageRule.self,
     IndentationWidthRule.self,
     InertDeferRule.self,
+    InitializerParamCountRule.self,
     InvalidSwiftLintCommandRule.self,
     IsDisjointRule.self,
     JoinedDefaultParameterRule.self,
