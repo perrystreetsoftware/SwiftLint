@@ -9,8 +9,8 @@ import Foundation
 import SwiftLintCore
 
 @AutoApply
-struct ParameterCountRuleConfiguration: RuleConfiguration {
-    typealias Parent = ParameterCountRule
+struct InitializerParamCountRuleConfiguration: RuleConfiguration {
+    typealias Parent = InitializerParamCountRule
 
     @ConfigurationElement(inline: true)
     private(set) var severityConfiguration = SeverityLevelsConfiguration<Parent>(warning: 8, error: 8)

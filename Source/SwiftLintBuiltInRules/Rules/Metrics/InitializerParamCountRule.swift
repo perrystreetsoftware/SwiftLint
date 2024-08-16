@@ -1,8 +1,8 @@
 import SwiftSyntax
 
 @SwiftSyntaxRule
-struct ParameterCountRule: Rule {
-    var configuration = ParameterCountRuleConfiguration()
+struct InitializerParamCountRule: Rule {
+    var configuration = InitializerParamCountRuleConfiguration()
 
     static let description = RuleDescription(
         identifier: "parameter_count",
@@ -23,7 +23,7 @@ struct ParameterCountRule: Rule {
     )
 }
 
-private extension ParameterCountRule {
+private extension InitializerParamCountRule {
     final class Visitor: ViolationsSyntaxVisitor<ConfigurationType> {
         override func visitPost(_ node: InitializerDeclSyntax) {
             guard !node.modifiers.contains(keyword: .override) else {

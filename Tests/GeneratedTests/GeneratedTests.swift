@@ -553,6 +553,12 @@ final class InertDeferRuleGeneratedTests: SwiftLintTestCase {
     }
 }
 
+final class InitializerParamCountRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(InitializerParamCountRule.description)
+    }
+}
+
 final class InvalidSwiftLintCommandRuleGeneratedTests: SwiftLintTestCase {
     func testWithDefaultConfiguration() {
         verifyRule(InvalidSwiftLintCommandRule.description)
@@ -880,12 +886,6 @@ final class OverriddenSuperCallRuleGeneratedTests: SwiftLintTestCase {
 final class OverrideInExtensionRuleGeneratedTests: SwiftLintTestCase {
     func testWithDefaultConfiguration() {
         verifyRule(OverrideInExtensionRule.description)
-    }
-}
-
-final class ParameterCountRuleGeneratedTests: SwiftLintTestCase {
-    func testWithDefaultConfiguration() {
-        verifyRule(ParameterCountRule.description)
     }
 }
 

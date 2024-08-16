@@ -49,6 +49,6 @@ final class RulesTests: SwiftLintTestCase {
     }
     
     func testParameterCountRule() {
-        verifyRule(ParameterCountRule.description)
+        verifyRule(InitializerParamCountRule.description)
     }
 }
