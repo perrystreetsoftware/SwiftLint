@@ -883,6 +883,12 @@ final class OverrideInExtensionRuleGeneratedTests: SwiftLintTestCase {
     }
 }
 
+final class ParameterCountRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(ParameterCountRule.description)
+    }
+}
+
 final class PatternMatchingKeywordsRuleGeneratedTests: SwiftLintTestCase {
     func testWithDefaultConfiguration() {
         verifyRule(PatternMatchingKeywordsRule.description)

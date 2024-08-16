@@ -149,6 +149,7 @@ public let builtInRules: [any Rule.Type] = [
     OrphanedDocCommentRule.self,
     OverriddenSuperCallRule.self,
     OverrideInExtensionRule.self,
+    ParameterCountRule.self,
     PatternMatchingKeywordsRule.self,
     PeriodSpacingRule.self,
     PreferNimbleRule.self,
