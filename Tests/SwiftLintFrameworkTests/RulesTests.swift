@@ -47,4 +47,8 @@ final class RulesTests: SwiftLintTestCase {
     func testDoNotOverrideUserOrSuperPropertiesRule() {
         verifyRule(DoNotOverrideUserOrSuperPropertiesRule.description)
     }
+    
+    func testParameterCountRule() {
+        verifyRule(InitializerParamCountRule.description)
+    }
 }

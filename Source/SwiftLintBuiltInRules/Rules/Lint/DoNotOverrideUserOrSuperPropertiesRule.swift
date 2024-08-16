@@ -170,7 +170,7 @@ private struct DoNotOverrideUserOrSuperPropertiesRuleExamples {
                             if let callDuration = callDuration {
                                 properties["\(property)"] = callDuration * 1000
                             }
-                
+
                             return AnalyticsEvent(
                                 name: "call_ended",
                                 category: .videoChat,

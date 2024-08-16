@@ -534,6 +534,10 @@ switch_case_on_newline:
   severity: warning
 syntactic_sugar:
   severity: warning
+parameter_count:
+  warning: 8
+  error: 8
+  ignores_default_parameters: true
 test_case_accessibility:
   severity: warning
   allowed_prefixes: []

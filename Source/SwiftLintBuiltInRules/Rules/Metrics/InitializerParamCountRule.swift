@@ -1,0 +1,60 @@
+import SwiftSyntax
+
+@SwiftSyntaxRule
+struct InitializerParamCountRule: Rule {
+    var configuration = InitializerParamCountRuleConfiguration()
+
+    static let description = RuleDescription(
+        identifier: "initializer_parameter_count",
+        name: "Initializer Parameter Count",
+        description: "Initializers should not have more than 8 parameters.",
+        kind: .metrics,
+        nonTriggeringExamples: [
+            Example("init(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int) {}"),
+            Example("init(a: Int, b: Int, c: Int, d: Int, e: Int) {}"),
+            Example("init(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int) {}"),
+        ],
+        triggeringExamples: [
+            Example("↓init(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int, i: Int) {}"),
+            Example("↓init?(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int, i: Int) {}"),
+            Example("↓init?<T>(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int, i: Int) {}"),
+            Example("↓init?<T: String>(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int, i: Int) {}"),
+        ]
+    )
+}
+
+private extension InitializerParamCountRule {
+    final class Visitor: ViolationsSyntaxVisitor<ConfigurationType> {
+        override func visitPost(_ node: InitializerDeclSyntax) {
+            guard !node.modifiers.contains(keyword: .override) else {
+                return
+            }
+
+            let parameterList = node.signature.parameterClause.parameters
+            guard let minThreshold = configuration.severityConfiguration.params.map(\.value).min(by: <) else {
+                return
+            }
+
+            let allParameterCount = parameterList.count
+            if allParameterCount < minThreshold {
+                return
+            }
+
+            let parameterCount = allParameterCount
+
+            for parameter in configuration.severityConfiguration.params where parameterCount > parameter.value {
+                let reason = "Initializer should have \(configuration.severityConfiguration.error!) parameters " +
+                             "or less: it currently has \(parameterCount)"
+
+                violations.append(
+                    ReasonedRuleViolation(
+                        position: node.initKeyword.positionAfterSkippingLeadingTrivia,
+                        reason: reason,
+                        severity: parameter.severity
+                    )
+                )
+                return
+            }
+        }
+    }
+}
