@@ -12,13 +12,13 @@ struct InitializerParamCountRule: Rule {
         nonTriggeringExamples: [
             Example("init(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int) {}"),
             Example("init(a: Int, b: Int, c: Int, d: Int, e: Int) {}"),
+            Example("init(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int) {}"),
         ],
         triggeringExamples: [
             Example("↓init(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int, i: Int) {}"),
-            Example("↓init(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int) {}"),
-            Example("↓init?(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int) {}"),
-            Example("↓init?<T>(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int) {}"),
-            Example("↓init?<T: String>(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int) {}"),
+            Example("↓init?(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int, i: Int) {}"),
+            Example("↓init?<T>(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int, i: Int) {}"),
+            Example("↓init?<T: String>(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int, i: Int) {}"),
         ]
     )
 }
@@ -42,7 +42,7 @@ private extension InitializerParamCountRule {
 
             let parameterCount = allParameterCount
 
-            for parameter in configuration.severityConfiguration.params where parameterCount >= parameter.value {
+            for parameter in configuration.severityConfiguration.params where parameterCount > parameter.value {
                 let reason = "Initializer should have \(configuration.severityConfiguration.error!) parameters " +
                              "or less: it currently has \(parameterCount)"
 
