@@ -9,7 +9,7 @@ public struct Version: VersionComparable {
     }
 
     /// The current SwiftLint version.
-    public static let current = Self(value: "0.0.22")
+    public static let current = Self(value: "0.0.29")
 
     /// Public initializer.
     ///
