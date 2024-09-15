@@ -173,7 +173,7 @@ package.targets.append(
     .binaryTarget(
         name: "SwiftLintBinary",
         url: "https://github.com/perrystreetsoftware/SwiftLint/releases/download/0.0.29/SwiftLintBinary-macos.artifactbundle.zip",
-        checksum: "dfbe456a2abc0cf6d2118a05cf35b7f2edb39223eb8eaf6c841990235d563564"
+        checksum: "84016c263ee49fbf8dd6daa82d2c7bad9a1df601552fa3ec955b3183277467a4"
     )
 )
 #endif
